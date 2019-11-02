@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+    <title>Пример картыAPI Яндекс.Карт 2.x</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ 
+    <script src="http://api-maps.yandex.ru/2.0/?apikey=464ee1fd-a25c-4951-8f40-23c294e30f96&load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <!-- <script src="https://api-maps.yandex.ru/2.1/?apikey=464ee1fd-a25c-4951-8f40-23c294e30f96&lang=ru_RU" type="text/javascript"></script> -->
+    <script src="tiler-converter.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        /**
+         * Забираем этот объект из выдачи приложения "Подготовка слоя тайлов".
+         * @see http://api.yandex.ru/maps/doc/jsapi/1.x/dg/concepts/ymapstiler.xml
+         */
+        var options = {
+                    tileUrlTemplate: "./%z/tile-%x-%y.png",
+                    controls: {
+                        typeControl: false,
+                        miniMap: false,
+                        toolBar: true,
+                        scaleLine: false
+                    },
+                    scrollZoomEnabled: false,
+                    mapCenter: new YMaps.GeoPoint(-179.725341796875, 85.0663745554664),
+                    //mapCenter: new YMaps.GeoPoint(0, 0),
+                    backgroundMapType: YMaps.MapType.NONE,
+                    mapZoom: 10,
+                    isTransparent: true,
+                    smoothZooming: false,
+                    layerKey: "my#layer",
+                    mapType: {
+                        name: "Пример карты",
+                        textColor: "#000000"
+                    },
+                    copyright: "",
+                /**
+                 * Диапазон доступных масштабов на данном слое карты.
+                 * Эти два поля приложение не генерит,
+                 * их нужно дописать вручную, чтобы корректно работал ZoomControl.
+                 */
+                layerMinZoom: 10,
+                layerMaxZoom: 16
+            };
+
+        ymaps.ready(function () {
+            // Передаем его в конструктор класса TilerConverter и получаем ссылку на карту.
+            var myMap = (new TilerConverter(options)).getMap();
+        });
+    </script>
+    <style type="text/css">
+        #YMapsID {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-unit">
+        <div class="container">
+            <p>Пример карты - API Яндекс.Карт 2.x</p>
+            <div id="YMapsID"></div>
+        </div>
+    </div>
+</body>
+</html>
